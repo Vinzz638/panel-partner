@@ -1,2 +1,44 @@
-<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{background:#000 url('https://i.pinimg.com/736x/f2/61/8b/f2618b760086307a68e833441584b423.jpg') no-repeat center;background-size:cover;margin:0;height:100vh;display:flex;justify-content:center;align-items:center;font-family:sans-serif;overflow:hidden}#loginBox,#panelBox{border:2px solid #4ade80;background:rgba(13,13,13,0.9);padding:30px;border-radius:20px;width:320px;text-align:center;box-shadow:0 0 25px rgba(74,222,128,0.6);backdrop-filter:blur(10px)}#panelBox{display:none;width:350px}.title{color:#4ade80;font-weight:700;font-size:20px;letter-spacing:3px;margin-bottom:20px;text-shadow:0 0 10px #4ade80}input{width:100%;background:#111;border:1px solid #4ade80;color:#4ade80;padding:15px;margin-bottom:20px;border-radius:12px;outline:0;box-sizing:border-box;text-align:center;font-weight:700}button{width:100%;background:#4ade80;color:#000;font-weight:700;padding:15px;border:none;border-radius:12px;cursor:pointer;text-transform:uppercase;box-shadow:0 0 15px #4ade80;transition:0.3s;margin-bottom:10px}button:active{transform:scale(0.95)}.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}.btn-menu{padding:10px;font-size:12px;background:transparent;color:#4ade80;border:1px solid #4ade80;box-shadow:none}</style></head><body><div id="loginBox"><div class="title">VINZZXHOST</div><input type="text" id="s" placeholder="MASUKKAN SANDI"><button onclick="login()">MASUK PANEL</button></div><div id="panelBox"><div class="title">BUYER PANEL</div><div style="color:#4ade80;font-size:12px;margin-bottom:20px">Status: <span id="stat">Premium Active</span></div><div class="menu-grid"><button class="btn-menu" onclick="alert('Menu 1 Aktif')">FREE FIRE</
-  
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{background:#000 url('https://i.pinimg.com/736x/f2/61/8b/f2618b760086307a68e833441584b423.jpg') no-repeat center;background-size:cover;margin:0;height:100vh;display:flex;justify-content:center;align-items:center;font-family:sans-serif;overflow:hidden}
+.card{border:2px solid #4ade80;background:rgba(13,13,13,0.95);padding:30px;border-radius:20px;width:320px;text-align:center;box-shadow:0 0 25px rgba(74,222,128,0.6);backdrop-filter:blur(10px)}
+.title{color:#4ade80;font-weight:700;font-size:20px;letter-spacing:3px;margin-bottom:25px;text-shadow:0 0 10px #4ade80}
+input{width:100%;background:#111;border:1px solid #4ade80;color:#4ade80;padding:15px;margin-bottom:20px;border-radius:12px;outline:0;box-sizing:border-box;text-align:center;font-weight:700}
+button{width:100%;background:#4ade80;color:#000;font-weight:700;padding:15px;border:none;border-radius:12px;cursor:pointer;text-transform:uppercase;box-shadow:0 0 15px #4ade80}
+</style></head><body>
+<div id="app" class="card"><div class="title">VINZZXHOST LOGIN</div><input type="text" id="s" placeholder="MASUKKAN SANDI"><button onclick="login()">MASUK PANEL</button></div>
+<script>
+const api = "https://script.google.com/macros/s/AKfycbwmpI6vfNX4_IIdx1v6g__mM7WClH65VIg5oxvCvgV-d9t4_KiPAsNbkBIt2JgsTh81ew/exec";
+const panelUrl = "https://t.me/vinzz_bot"; // Ganti link panel utama di sini jika perlu
+
+async function login(){
+    const k = document.getElementById("s").value;
+    if(!k) return alert("Isi Sandi!");
+    try {
+        const r = await fetch(`${api}?action=checkKey&key=${k}`);
+        const d = await r.json();
+        if(d.status == "success"){
+            localStorage.setItem("vTime", Date.now());
+            window.location.href = panelUrl; // PINDAH DI TAB YANG SAMA
+        } else {
+            alert("SANDI SALAH / EXPIRED! ❌");
+        }
+    } catch(e) {
+        alert("Koneksi Error! Pastikan Deploy sudah 'Anyone' dan Izinkan Akses.");
+    }
+}
+
+// LOGIKA 10 MENIT AUTO-LOGOUT
+window.onload = function() {
+    const t = localStorage.getItem("vTime");
+    if(t) {
+        const diff = (Date.now() - t) / 1000 / 60;
+        if(diff > 10) { // Jika lebih dari 10 menit
+            localStorage.clear();
+            alert("Sesi Habis (10 Menit)! Silakan Login Kembali.");
+        } else {
+            // Masih dalam 10 menit, langsung lempar ke panel
+            window.location.href = panelUrl;
+        }
+    }
+}
+</script></body></html>
