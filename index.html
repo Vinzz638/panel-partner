@@ -7,8 +7,7 @@ button{width:100%;background:#4ade80;color:#000;font-weight:700;padding:15px;bor
 </style></head><body>
 <div id="app" class="card"><div class="title">VINZZXHOST LOGIN</div><input type="text" id="s" placeholder="MASUKKAN SANDI"><button onclick="login()">MASUK PANEL</button></div>
 <script>
-// GANTI LINK DI BAWAH INI DENGAN LINK EXEC TERBARU DARI GOOGLE SCRIPT!
-const api = "https://script.google.com/macros/s/AKfycbwmpI6vfNX4_IIdx1v6g__mM7WClH65VIg5oxvCvgV-d9t4_KiPAsNbkBIt2JgsTh81ew/exec";
+const api = "https://script.google.com/macros/s/AKfycbx4H5765g5E9M_MdTNe67DQXuVLnor9Be5a01oaE4iW53NcTsk1hCbD8SL5_Knf3zvw/exec";
 const panelUrl = "https://t.me/vinzz_bot"; 
 
 async function login(){
@@ -20,11 +19,13 @@ async function login(){
         if(d.status == "success"){
             localStorage.setItem("vTime", Date.now());
             window.location.href = panelUrl; 
+        } else if(d.status == "expired") {
+            alert("SANDI SUDAH KADALUARSA/EXPIRED! ❌");
         } else {
-            alert("SANDI SALAH / EXPIRED! ❌");
+            alert("SANDI SALAH! ❌");
         }
     } catch(e) {
-        alert("Koneksi Error! Cek apakah Link API di GitHub sudah diupdate ke yang terbaru.");
+        alert("Koneksi Error! Pastikan Izin Google Script sudah 'Anyone'.");
     }
 }
 
