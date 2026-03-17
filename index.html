@@ -18,14 +18,12 @@ async function login(){
         const d = await r.json();
         if(d.status == "success"){
             localStorage.setItem("vTime", Date.now());
-            window.location.href = panelUrl; 
-        } else if(d.status == "expired") {
-            alert("SANDI SUDAH KADALUARSA/EXPIRED! ❌");
+            window.location.replace(panelUrl); // Pindah di tab yang sama
         } else {
-            alert("SANDI SALAH! ❌");
+            alert("SANDI SALAH / EXPIRED! ❌");
         }
     } catch(e) {
-        alert("Koneksi Error! Pastikan Izin Google Script sudah 'Anyone'.");
+        alert("Koneksi Error! Klik 'Izinkan Akses' di Google Script dulu bang!");
     }
 }
 
@@ -33,11 +31,11 @@ window.onload = function() {
     const t = localStorage.getItem("vTime");
     if(t) {
         const diff = (Date.now() - t) / 1000 / 60;
-        if(diff > 10) {
+        if(diff > 10) { // Sistem 10 Menit Auto Logout
             localStorage.clear();
             alert("Sesi Habis (10 Menit)! Silakan Login Kembali.");
         } else {
-            window.location.href = panelUrl;
+            window.location.replace(panelUrl);
         }
     }
 }
