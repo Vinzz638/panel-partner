@@ -7,8 +7,9 @@ button{width:100%;background:#4ade80;color:#000;font-weight:700;padding:15px;bor
 </style></head><body>
 <div id="app" class="card"><div class="title">VINZZXHOST LOGIN</div><input type="text" id="s" placeholder="MASUKKAN SANDI"><button onclick="login()">MASUK PANEL</button></div>
 <script>
+// GANTI LINK DI BAWAH INI DENGAN LINK EXEC TERBARU DARI GOOGLE SCRIPT!
 const api = "https://script.google.com/macros/s/AKfycbwmpI6vfNX4_IIdx1v6g__mM7WClH65VIg5oxvCvgV-d9t4_KiPAsNbkBIt2JgsTh81ew/exec";
-const panelUrl = "https://t.me/vinzz_bot"; // Ganti link panel utama di sini jika perlu
+const panelUrl = "https://t.me/vinzz_bot"; 
 
 async function login(){
     const k = document.getElementById("s").value;
@@ -18,25 +19,23 @@ async function login(){
         const d = await r.json();
         if(d.status == "success"){
             localStorage.setItem("vTime", Date.now());
-            window.location.href = panelUrl; // PINDAH DI TAB YANG SAMA
+            window.location.href = panelUrl; 
         } else {
             alert("SANDI SALAH / EXPIRED! ❌");
         }
     } catch(e) {
-        alert("Koneksi Error! Pastikan Deploy sudah 'Anyone' dan Izinkan Akses.");
+        alert("Koneksi Error! Cek apakah Link API di GitHub sudah diupdate ke yang terbaru.");
     }
 }
 
-// LOGIKA 10 MENIT AUTO-LOGOUT
 window.onload = function() {
     const t = localStorage.getItem("vTime");
     if(t) {
         const diff = (Date.now() - t) / 1000 / 60;
-        if(diff > 10) { // Jika lebih dari 10 menit
+        if(diff > 10) {
             localStorage.clear();
             alert("Sesi Habis (10 Menit)! Silakan Login Kembali.");
         } else {
-            // Masih dalam 10 menit, langsung lempar ke panel
             window.location.href = panelUrl;
         }
     }
