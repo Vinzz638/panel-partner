@@ -7,7 +7,7 @@ button{width:100%;background:#4ade80;color:#000;font-weight:700;padding:15px;bor
 </style></head><body>
 <div id="app" class="card"><div class="title">VINZZXHOST LOGIN</div><input type="text" id="s" placeholder="MASUKKAN SANDI"><button onclick="login()">MASUK PANEL</button></div>
 <script>
-const api = "https://script.google.com/macros/s/AKfycbwvRSzZaYuWR3R-fxQM672cvKybxS-sjb6YyiUl8dKB_ebtaAKBcDrAsIskCw9AsH-qng/exec";
+const api = "https://script.google.com/macros/s/AKfycbxfBtX8jPUluI_50gE5mHC7wQArD-ocgUkrW-u_H24hi9tJxK4-6IVWERJ_xYs6yqIEQ/exec";
 const panelUrl = "https://t.me/vinzz_bot"; 
 
 async function login(){
@@ -18,25 +18,24 @@ async function login(){
         const d = await r.json();
         if(d.status == "success"){
             localStorage.setItem("vTime", Date.now());
-            window.location.replace(panelUrl); // Ganti halaman di tab yang sama
+            window.location.replace(panelUrl); 
         } else if(d.status == "expired") {
-            alert("SANDI EXPIRED! ❌");
+            alert("SANDI SUDAH HABIS WAKTU! ❌");
         } else {
             alert("SANDI SALAH! ❌");
         }
     } catch(e) {
-        alert("Koneksi Error! Coba refresh halaman.");
+        alert("Koneksi Error! Tunggu 1 menit lalu coba lagi.");
     }
 }
 
-// LOGIKA 10 MENIT LOGOUT & AUTO REDIRECT
 window.onload = function() {
     const t = localStorage.getItem("vTime");
     if(t) {
         const diff = (Date.now() - t) / 1000 / 60;
-        if(diff > 10) {
+        if(diff > 10) { // Logout otomatis setelah 10 menit
             localStorage.clear();
-            alert("Sesi Habis (10 Menit)! Silakan Login Lagi.");
+            alert("Sesi Habis! Silakan Login Kembali.");
         } else {
             window.location.replace(panelUrl);
         }
