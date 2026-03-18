@@ -7,14 +7,14 @@ button{width:100%;background:#4ade80;color:#000;font-weight:700;padding:15px;bor
 </style></head><body>
 <div id="app" class="card"><div class="title">VINZZXHOST LOGIN</div><input type="text" id="s" placeholder="MASUKKAN SANDI"><button onclick="login()">MASUK PANEL</button></div>
 <script>
-const api = "https://script.google.com/macros/s/AKfycbyb3Y3kal1zMl-5SxDqrNDWziDv6yBDqmDNVKwqCBXPHHmFHk06sezyjXoPnBGyHxJcEA/exec";
+const api = "https://script.google.com/macros/s/AKfycbxTNaaSClbeiJPkD4MM0sgyRO1hIBfbNZwPPnulLhC4Vgmc7D8CLsKrQ2QydmGMPWIH3w/exec";
 const panelUrl = "https://t.me/vinzz_bot"; 
 
 function login() {
     const k = document.getElementById("s").value;
     if(!k) return alert("Isi Sandi!");
     
-    // Panggil API lewat jalur belakang biar gak error
+    // Pakai JSONP biar gak Koneksi Error lagi
     const script = document.createElement('script');
     script.src = `${api}?action=checkKey&key=${k}&callback=handleRes`;
     document.body.appendChild(script);
