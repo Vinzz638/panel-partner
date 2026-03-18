@@ -7,25 +7,25 @@ button{width:100%;background:#4ade80;color:#000;font-weight:700;padding:15px;bor
 </style></head><body>
 <div id="app" class="card"><div class="title">VINZZXHOST LOGIN</div><input type="text" id="s" placeholder="MASUKKAN SANDI"><button onclick="login()">MASUK PANEL</button></div>
 <script>
-const api = "https://script.google.com/macros/s/AKfycbxfBtX8jPUluI_50gE5mHC7wQArD-ocgUkrW-u_H24hi9tJxK4-6IVWERJ_xYs6yqIEQ/exec";
+const api = "https://script.google.com/macros/s/AKfycbyb3Y3kal1zMl-5SxDqrNDWziDv6yBDqmDNVKwqCBXPHHmFHk06sezyjXoPnBGyHxJcEA/exec";
 const panelUrl = "https://t.me/vinzz_bot"; 
 
-async function login(){
+function login() {
     const k = document.getElementById("s").value;
     if(!k) return alert("Isi Sandi!");
-    try {
-        const r = await fetch(`${api}?action=checkKey&key=${k}`);
-        const d = await r.json();
-        if(d.status == "success"){
-            localStorage.setItem("vTime", Date.now());
-            window.location.replace(panelUrl); 
-        } else if(d.status == "expired") {
-            alert("SANDI SUDAH HABIS WAKTU! ❌");
-        } else {
-            alert("SANDI SALAH! ❌");
-        }
-    } catch(e) {
-        alert("Koneksi Error! Tunggu 1 menit lalu coba lagi.");
+    
+    // Panggil API lewat jalur belakang biar gak error
+    const script = document.createElement('script');
+    script.src = `${api}?action=checkKey&key=${k}&callback=handleRes`;
+    document.body.appendChild(script);
+}
+
+function handleRes(d) {
+    if(d.status == "success"){
+        localStorage.setItem("vTime", Date.now());
+        window.location.replace(panelUrl); 
+    } else {
+        alert(d.status == "expired" ? "SANDI EXPIRED! ❌" : "SANDI SALAH! ❌");
     }
 }
 
@@ -33,12 +33,8 @@ window.onload = function() {
     const t = localStorage.getItem("vTime");
     if(t) {
         const diff = (Date.now() - t) / 1000 / 60;
-        if(diff > 10) { // Logout otomatis setelah 10 menit
-            localStorage.clear();
-            alert("Sesi Habis! Silakan Login Kembali.");
-        } else {
-            window.location.replace(panelUrl);
-        }
+        if(diff < 10) window.location.replace(panelUrl);
+        else localStorage.clear();
     }
 }
 </script></body></html>
